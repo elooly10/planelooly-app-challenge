@@ -80,8 +80,7 @@ export function STATE(
 	airports = shuffle(
 		airports
 	);
-	for (var i = 0; i < airports.length; i++) {
-		let airport = airports[i];
+	for (const airport of airports) {
 		const distance = haversineDistance(
 			central.latitude,
 			central.longitude,
@@ -130,7 +129,7 @@ export function STATE(
 			airportsPreFinished.push(...airport.nearbyAirports);
 			continue;
 		}
-		else airports[i].queryResult =
+		else airport.queryResult =
 			airport === central
 				? 0
 				: details.farDistance *

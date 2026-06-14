@@ -82,7 +82,7 @@ function calculateTravelers(
 	// Even if Buffalo is closer, you still are more likely to want to fly to New York City
 	const popularityFactor =
 		airportB.enplanements / meanEnplanements + Math.sqrt(airportB.enplanements) / 3;
-	// But if Seattle is way closer than New York City, you'll end up wanting to go there!
+	// But if Spokane is way closer than New York City, you'll end up wanting to go there!
 	const distanceFactor = Math.max(Math.min(250 - 0.025 * distance, distance / 2) / 70, 0);
 	const value = 2 * popularityFactor + distanceFactor;
 	if (isNaN(value)) {

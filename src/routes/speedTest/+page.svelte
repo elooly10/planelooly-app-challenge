@@ -48,6 +48,7 @@
 		}
 		console.log($airports);
 	}
+	let airportID = 0;
 </script>
 
 {#if tickTime}
@@ -75,13 +76,13 @@
 {/if}
 <div class="grid grid-cols-2 gap-8 p-8 h-min">
 	{#if $airports.length && startTime}
-		<AirportModal airportID={0} />
+		<AirportModal bind:airportID />
 		<div class="flex flex-col">
 			<div class="w-full md:w-auto h-[50vh] min-w-[50%] overflow-y-scroll">
-				<MainColumn airportID={0} />
+				<MainColumn bind:airportID />
 			</div>
 			<div class="h-[50vh] sticky bottom-2">
-				<MapModal airportID={0} />
+				<MapModal bind:airportID />
 			</div>
 		</div>
 	{/if}

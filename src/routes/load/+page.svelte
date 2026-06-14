@@ -119,8 +119,8 @@
 		let airport = allAirports[i];
 		allAirports[i].airport = {
 			location: airport.location,
-			state: airport.state,
-			IATA: airport.IATA,
+			state: airport.state as any,
+			IATA: airport.IATA as iata,
 			enplanements: airport.enplanements,
 			longitude: airport.longitude,
 			latitude: airport.latitude
@@ -134,7 +134,7 @@
 		return Math.round((Math.abs(a - b) / b) * 100);
 	}
 	async function convert() {
-		let airports: airportType[] = allAirports.map((airport) => {
+		let airports: Partial<airportType>[] = allAirports.map((airport) => {
 			let i = airport.airport;
 			return {
 				location: i.location,

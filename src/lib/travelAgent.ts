@@ -173,11 +173,26 @@ function calculatePath(airportA: airportType, airportB: airportType): cacheType 
 			}
 			visited.set(airport.IATA, time);
 
+			// We might have already found the best route from this point, we can just use that
+			let possibleCacheKey = `${airport.IATA as string}-${airportB.IATA}`
+			if(cache[possibleCacheKey] && cache[possibleCacheKey].order.length) {
+				const timeThroughCache = time + cache[possibleCacheKey].sumTime;
+				const cacheOrder = cache[possibleCacheKey].order.map(IATAtoAirport);
+				cacheOrder.pop() // Remove the end because we are adding it back later
+				queue.enqueue({
+					airport: airportB,
+					time: timeThroughCache,
+					order: [...order, ...cacheOrder]
+				}, timeThroughCache)
+
+				continue
+			}
+
 			for (let gate of Object.values(airport.connections)) {
 				if(gate.gates == 0 || gate.location == airport.IATA) continue;
-				let nextAirport = IATAtoAirport(gate.location);
-				let newTime = time + gate.speed;
-				let newOrder = [...order, airport];
+				const nextAirport = IATAtoAirport(gate.location);
+				const newTime = time + gate.speed;
+				const newOrder = [...order, airport];
 
 				if (!visited.has(gate.location) || newTime < visited.get(gate.location)) {
 					queue.enqueue({ airport: nextAirport, time: newTime, order: newOrder }, newTime);
